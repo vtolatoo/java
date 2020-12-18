@@ -1,0 +1,26 @@
+public class Main {
+    private static LocalCache<Country> localCache = new LocalCache<>();
+
+    public static void main(String[] args) {
+        String key = "156";
+        Country country = getCacheData(key);
+        System.out.println(country);
+        Country country1 = getCacheData(key);
+        System.out.println(country1);
+
+    }
+
+    public static Country getCacheData(String key) {
+        Country country = localCache.get(key);
+        if (country == null) {
+            country = getFromDatabase();
+            localCache.set(key, country);
+        }
+        return country;
+    }
+
+    private static Country getFromDatabase() {
+        // 查询数据库
+        return new Country("156", "中国");
+    }
+}
